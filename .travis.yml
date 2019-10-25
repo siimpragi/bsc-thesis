@@ -1,0 +1,27 @@
+# https://tex.stackexchange.com/questions/398830/how-to-build-my-latex-automatically-using-travis-ci?noredirect=1
+sudo: required
+language: generic
+services: docker
+
+script:
+  # We use the docker image from https://hub.docker.com/r/dxjoke/tectonic-docker/
+  - docker pull dxjoke/tectonic-docker
+  # Compiling only main.tex:
+  - docker run --mount src=$TRAVIS_BUILD_DIR,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic main.tex"
+  # Compiling multiple files as well as using biber:
+#  - docker run --mount src=$TRAVIS_BUILD_DIR,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic --keep-intermediates --reruns 0 biber-mwe.tex; biber biber-mwe; tectonic biber-mwe.tex; tectonic main.tex"
+
+before_deploy:
+  - mkdir pages
+  - cp main.pdf pages/
+
+# https://docs.travis-ci.com/user/deployment/pages/
+deploy:
+  provider: pages
+  local_dir: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  verbose: true
+  on:
+    branch: master
