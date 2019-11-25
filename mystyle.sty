@@ -46,6 +46,9 @@
 %\usepackage[estonian, english]{babel} %the thesis is in English 
 \usepackage[english, estonian]{babel} %the thesis is in Estonian
 
+% Kasuta eesti keele jutumärke
+\usepackage[autostyle=true]{csquotes}
+\DeclareQuoteAlias{german}{estonian}
 
 % Change Babel document elements 
 \addto\captionsestonian{%
@@ -53,6 +56,24 @@
   \renewcommand{\appendixname}{Lisad}%
 }
 
+% Mitmes eri kohas kasutatavad sõned käskudena:
+\providecommand{\mytitle}{}
+\providecommand{\mykeywords}{}
+\newcommand{\myauthor}{Siim Pragi}
+\newcommand{\myfirstsupervisor}{Timo Võhmar}
+\newcommand{\mysecondsupervisor}{Ahti Peder}
+\newcommand{\myfirstsupervisortitle}{MBA}
+\newcommand{\mysecondsupervisortitle}{PhD}
+
+\addto\captionsestonian{
+  \renewcommand{\mytitle}{Pealkiri eesti keeles}
+  \renewcommand{\mykeywords}{fuu, baar, bääz}
+}
+
+\addto\captionsenglish{
+  \renewcommand{\mytitle}{Title in English}
+  \renewcommand{\mykeywords}{foo, bar, baz}
+}
 
 % If you have problems with Estonian keywords in the bibliography
 %\usepackage{biblatex}
