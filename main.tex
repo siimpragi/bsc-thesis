@@ -88,10 +88,17 @@
 \end{comment}
 
 
-\subfile{tex/lisad}
+% Lisad
+\newpage
+\bookmarksetupnext{level=chapter}
+\begin{appendices}
+  \makeatletter
+  \addtocontents{toc}{\let\protect\l@section\protect\l@subsection}
+  \makeatother
+  \renewcommand\thesection{\Roman{section}}
 
-
-\subfile{tex/litsents}
+  \subfile{tex/litsents}
+\end{appendices}
 
 
 %%% END DOCUMENT

@@ -53,7 +53,9 @@
 % Change Babel document elements 
 \addto\captionsestonian{%
   \renewcommand{\refname}{Viidatud kirjandus}%
-  \renewcommand{\appendixname}{Lisad}%
+  \renewcommand{\appendixname}{Lisa}%
+  \renewcommand{\appendixtocname}{Lisad}%
+  \renewcommand{\appendixpagename}{Lisad}%
 }
 
 % Mitmes eri kohas kasutatavad sõned käskudena:
@@ -74,6 +76,11 @@
   \renewcommand{\mytitle}{Title in English}
   \renewcommand{\mykeywords}{foo, bar, baz}
 }
+
+% Lisade jaoks
+\usepackage[toc,page]{appendix}
+\usepackage{bookmark}
+
 
 % If you have problems with Estonian keywords in the bibliography
 %\usepackage{biblatex}
