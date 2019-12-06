@@ -63,6 +63,7 @@
 
 
 % If you have problems with Estonian keywords in the bibliography
+\usepackage[backend=biber, style=numeric]{biblatex}
 %\usepackage{biblatex}
 %\usepackage[backend=biber]{biblatex}
 %\usepackage[style=alphabetic]{biblatex}
@@ -71,7 +72,8 @@
 %% unsrt --> \usepackage[style=numeric,sorting=none]{biblatex}
 %% alpha --> \usepackage[style=alphabetic]{biblatex}
 %\DefineBibliographyStrings{estonian}{and={ja}}
-%\addbibresource{bachelor-thesis.bib}
+\addbibresource{bib/thesis.bib}
+\DefineBibliographyStrings{estonian}{references={Viidatud kirjandus}}
 
 
 % General packages for math in general, theorems and symbols 
