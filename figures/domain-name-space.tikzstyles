@@ -8,5 +8,4 @@
 
 % Edge styles
 \tikzstyle{thick_line}=[-, thick]
-%\tikzstyle{dotted}=[->, dash pattern=on 2pt off 2pt]
 \tikzstyle{dotted_line}=[-, dotted]
