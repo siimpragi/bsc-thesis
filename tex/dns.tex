@@ -1,5 +1,5 @@
 \documentclass[../main.tex]{subfiles}
- 
+
 \begin{document}
 
 
@@ -9,52 +9,55 @@
 Selleks, et arvutivõrgus saata pakett ühest masinast teise, tuleb esmalt teada viimase IP-aadressi.
 Tahtes sõbrale helistada, peame ju teadma tema telefoninumbrit.
 Pikkade numbrijadade, IP-aadresside meeldejätmine on inimeste jaoks aga küllaltki keeruline.
-Veel enam, kui need aadressid ajas muutuda võivad.
+Need aadressid võivad ajas ka muutuda näiteks Interneti tarnijat vahetades.
 Inimesed soovivad läbi võrgu kasutada erinevaid teenuseid, nagu näiteks veeb ja e-post, ning mitte mõelda selle peale, milline konkreetne masin neid neile pakkuda saab.
 
-Järgnev lõik tugineb Erkki Laaneoksa võrgutehnoloogia õpikule~\cite{laaneoks2010}.
-Kirjeldatud probleemi lahendamiseks töötati 1980. aastate keskel välja domeeninimede süsteem (ingl~k \textit{Domain Name System}) ehk DNS.
+Erkki Laaneoksa võrgutehnoloogia õpiku järgi~\cite{laaneoks2010} töötati kirjeldatud probleemi lahendamiseks 1980. aastate keskel välja domeeninimede süsteem (ingl \textit{Domain Name System}) ehk DNS.
 See on süsteem, mis seab IP-aadressid vastavusse kergemini meeldejäetavate domeeninimedega.
 Domeeninimi on hierarhilisel põhimõttel loodud, punktidega eraldatud märgenditest koosnev tähis, nagu näiteks \texttt{www.ut.ee}.
 DNS hõlmab endas muuhulgas ka protokolli, mille abil on võimalik nimelahendust pakkuvate serverite käest domeeninimedele vastavaid IP-aadresse pärida.
-Tänapäeval on see üks Interneti võtmeprotokollidest.
+Tema arvates on see tänapäeval üks Interneti võtmeprotokollidest.
 
 Domeeninimede süsteem on tervikuna kirjeldatud kommentaarinõuetes 1034~\cite{rfc1034} ja 1035~\cite{rfc1035}.
-Kommentaarinõue (ingl~k \textit{Request for Comments} ehk RFC) on Internetiehituse töörühma (IETF) poolt välja antav nummerdatud dokumentide sari \cite{ietf}.
+Kommentaarinõue (ingl \textit{Request for Comments} ehk RFC) on Internetiehituse töörühma (IETF) poolt välja antav nummerdatud dokumentide sari \cite{ietf}.
 DNS on üks vähestest neis dokumentides kirjeldatud tehnoloogiatest, millest on saanud Interneti standard.
 
-Laaneoks jagab oma õpikus~\cite{laaneoks2010} DNSi kolmeks osaks: ressursikirjetega nimeruum, nimeserverid ja nimelahendajad. Uurime kõigepealt neist esimest.
+Laaneoks kirjeldab oma õpikus~\cite{laaneoks2010} DNSi kolme osa: ressursikirjetega nimeruumi, nimeserverid ja nimelahendajad.
+Selles peatükis uuritakse kõigepealt neist esimest.
 
 
 \subsection{Nimeruum ja ressursikirjed}
 
-\begin{figure}[ht]
+Domeeninimede süsteemi iseloomustavad hierarhilisus ning detsentraliseeritus.
+Tema hierarhilisus tuleneb viisist, kuidas andmed domeeninimede kohta on organiseeritud.
+Iga domeeninimi on üles tähendatud domeeninimede ruumis: puukujulises andmestruktuuris, mille iga tipp on tähistatud märgendiga (ingl \textit{label}) ning kus igale tipule vastab teatud hulk ressursikirjeid (ingl \textit{resource records})~\cite{rfc1034}.
+Ressursikirjed võivad peale IP-aadresside sisaldada veel väga mitmesugust infot.
+%Ressursikirjetest, mis võivad peale IP-aadresside sisaldada veel mitmesugust infot, räägitakse üsna pea.
+Joonisel~\ref{fig:domain-name-space} on välja toodud väike osa domeeninimede ruumist.
+DNSi reeglite kohaselt ei tohi seejuures ühelgi sellise puu tippudest esineda ühesuguste märgenditega vahetuid alluvaid.
+%Tuleb ka märkida, et ühelgi tipul ei või esineda samasuguste märgenditega tähistatud lapsi.
+
+\begin{figure}[h]
   \ctikzfig{domain-name-space}
   \caption{Domeeninimede ruum.}
   \label{fig:domain-name-space}
 \end{figure}
 
-Domeeninimede süsteemi iseloomustavad hierarhilisus ning detsentraliseeritus.
-Tema hierarhilisus tuleneb viisist, kuidas andmed domeeninimede kohta on organiseeritud.
-Iga domeeninimi on üles tähendatud domeeninimede ruumis: puukujulises andmestruktuuris, mille iga tipp on tähistatud märgendiga (ingl~k \textit{label}) ning kus igale tipule vastab teatud hulk ressursikirjeid (ingl~k \textit{resource records})~\cite{rfc1034}.
-Ressursikirjetest, mis võivad peale IP-aadresside sisaldada veel mitmesugust infot, räägitakse üsna pea.
-Joonisel \ref{fig:domain-name-space} on välja toodud väike osa domeeninimede ruumist.
-Tuleb ka märkida, et ühelgi tipul ei või esineda samasuguste märgenditega tähistatud lapsi.
-
-Nagu peatüki alguses mainiti, koosnevad domeeninimed üksteisest punktidega eraldatud märgenditest.
+Domeeninimed koosnevad üksteisest punktidega eraldatud märgenditest.
 Nimede moodustamist kirjeldab RFC 1034~\cite{rfc1034}.
 Puu mingile tipule vastav domeeninimi leitakse sealt juure suunas (puus alt-üles) liikudes ning samaaegselt läbitud tippudele vastavaid märgendeid omavahel punktiga liites.
 Domeeninimede ruumis on märgendiga tähistatud iga tipp peale puu juure, mille märgend on pikkusega null.
 See tähendab, et kui nime moodustamisel jõutakse välja puu juureni, lõpeb tulemus punktiga.
-See on domeeni täisnimi (ingl~k \textit{fully qualified domain name}).
+See on domeeni täisnimi (ingl \textit{fully qualified domain name}).
+Näiteks on \texttt{cs.ut.ee.} ja \texttt{ee.wikipedia.org.} neile vastavate domeenide täisnimed.
 Praktikas jäetakse aga sageli nime lõpus juurt märkiv punkt ära.
 
-Tasub tähele panna, et domeen ja domeeninimi on erinevad mõisted.
-Sõnaga \enquote{domeen} märgitakse domeeninimede ruumi alampuud, mille juureks on mingi kindla domeeninime poolt määratud tipp.
+Domeen ja domeeninimi on erinevad mõisted.
+Sõnaga `domeen' märgitakse domeeninimede ruumi alampuud, mille juureks on mingi kindla domeeninime poolt määratud tipp.
 
 Nimeruumi puus võib vastavalt tipu kaugusele juurest eristada astmeid ning selle kaudu ka vastavaid domeeninimesid.
 Seega on näiteks \texttt{ee.} esimese, \texttt{ut.ee.} teise ning \texttt{cs.ut.ee.} kolmanda astme domeeninimi.
-Esimese astme domeene nimetatakse ka tippdomeenideks (ingl~k \textit{top-level domain}).
+Esimese astme domeene nimetatakse ka tippdomeenideks (ingl \textit{top-level domain}).
 Nende märgendid tähistavad üldjuhul riiki (nt \texttt{ee}, \texttt{fi}, \texttt{de} ja \texttt{jp}) või üldist tegevusala (nt \texttt{com}, \texttt{edu}, \texttt{mil} ja \texttt{gov}).
 Juurdomeeni haldab ning domeeninimede valdkonda kontrollib rahvusvaheline organisatsioon ICANN, kes volitab esimese astme domeeninimede registripidajaid.
 Eesti maatunnusega domeeninimesid haldab alates 2010. aastast Eesti Interneti Sihtasutus (EIS), kes selle kohustuse domeenireformi käigus EENetilt üle võttis~\cite{eis}.
@@ -73,18 +76,18 @@ RFC 1034~\cite{rfc1034} kohaselt koosneb iga ressursikirje järgmistest väljade
     \begin{description}[style=multiline,leftmargin=1.25cm,nosep]
       \item[A] hosti IPv4-aadress
       \item[AAAA] hosti IPv6-aadress
-      \item[MX] domeeni e-kirju vahetava hosti (ingl k \textit{mail exchanger}) domeeninimi
-      \item[NS] domeeni pädeva nimeserveri (ingl k \textit{name server}) hosti domeeninimi
-      \item[SOA] vastava tsooni primaarne nimeserver (ingl k \textit{start of authority})
+      \item[MX] domeeni e-kirju vahetava hosti (ingl \textit{mail exchanger}) domeeninimi
+      \item[NS] domeeni pädeva nimeserveri (ingl \textit{name server}) hosti domeeninimi
+      \item[SOA] vastava tsooni primaarne nimeserver (ingl \textit{start of authority})
       \item[CNAME] kanooniline nimi on domeeninimi, millele ressursikirjele vastav domeeninimi aliaseks seatakse
     \end{description}
   \item[CLASS] Määrab protokollistiku, mille kohta kirje käib. Enamasti \enquote{IN}, tähistamaks Interneti süsteemi protokolle, kuid võimalikud väärtused on ka \enquote{CH} ehk Chaos ning \enquote{HS} ehk Hesoid.
-  \item[TTL] Näitab aega sekundites, mille järel tuleks puhverdatud ressursi eluiga lugeda lõppenuks (ingl k \textit{time to live}) ning info vajadusel uuesti pärida.
+  \item[TTL] Näitab aega sekundites, mille järel tuleks puhverdatud ressursi eluiga lugeda lõppenuks (ingl \textit{time to live}) ning info vajadusel uuesti pärida.
   \item[RDATA] Ressursikirje põhiinfo, mille olemus on määratud tema tüübi ja klassi poolt.
 \end{description}
 
 DNSist võib mõelda kui üle maailma hajutatud andmebaasist.
-Nimeruumi info on jagatud sektsioonideks, mida nimetatakse tsoonideks (ingl~k \textit{zone}).
+Nimeruumi info on jagatud sektsioonideks, mida nimetatakse tsoonideks (ingl \textit{zone}).
 Tsoone, mis sisaldavad infot erinevate domeeninimede kohta, hoitakse nimeserverites.
 
 
